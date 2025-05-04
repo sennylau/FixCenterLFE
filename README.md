@@ -68,7 +68,7 @@ Many Wine-based Windows games assume Windows-style surround sound mapping. On ma
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/FixCenterLFE.git
+   git clone https://github.com/sennylau/FixCenterLFE.git
    cd FixCenterLFE
    ```
 
@@ -94,3 +94,20 @@ Verified working with:
 - [x] Black Myth: Wukong
 - [x] Split Fiction
 - [ ] Other games (please report your tests!)
+
+## 🛠 Troubleshooting
+
+### Common Issues and Solutions
+
+1. **No Audio Output**
+   - Check macOS Sound settings for correct output device (e.g. BlackHole 16ch)
+   - Restart the app after changing audio devices
+
+2. **Channel Swap Not Working**
+   - Confirm your audio device supports at least 4 channels
+   - Check BlackHole is configured for 16 channels
+   - Verify game is outputting surround sound
+
+3. **Permission Errors**
+   - Grant microphone permission to terminal/VSCode
+   - Check System Preferences > Security & Privacy > Microphone
