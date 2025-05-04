@@ -18,6 +18,12 @@ Many Wine-based Windows games assume Windows-style surround sound mapping. On ma
 
 ---
 
+## 🎮 Supported Games
+
+- Black Myth: Wukong (黑神话悟空)
+- Split Fiction (双影奇境)
+- Other Wine/Crossover games with center/LFE channel issues
+
 ## 🎯 Solution
 
 **FixCenterLFE** sits between the system audio output and your real audio hardware, capturing audio in real time, **swapping channel 3 (Center) and channel 4 (LFE)**, and passing the corrected signal to your speakers.
@@ -42,3 +48,23 @@ Many Wine-based Windows games assume Windows-style surround sound mapping. On ma
       [Corrected Multichannel Audio]
              │
       ▼ Real Output Device (e.g. HDMI, Headphones)
+
+## 🤝 Contributing
+
+PRs are welcome! To contribute:
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+Please include:
+- Description of changes
+- Testing details
+- Screenshots if applicable
+
+## 🧪 Testing
+Verified working with:
+- [x] Black Myth: Wukong
+- [x] Split Fiction
+- [ ] Other games (please report your tests!)

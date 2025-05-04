@@ -5,7 +5,7 @@ from device import Device
 
 class AudioSwitcherApp(rumps.App):
     def __init__(self):
-        super(AudioSwitcherApp, self).__init__("🎛️ FixCenterLFE", quit_button=None)
+        super(AudioSwitcherApp, self).__init__("🎛️", quit_button=None)
         self.p = pyaudio.PyAudio()
         self.processor = None
         self.input_device = None
@@ -22,17 +22,25 @@ class AudioSwitcherApp(rumps.App):
             dev = Device(i, self.p.get_device_info_by_index(i))
             if dev.max_input_channels > 2:
                 input_devices.append(dev)
-            if dev.max_output_channels > 2:
+                if dev.name.startswith('BlackHole') and not self.input_device:
+                    self.input_device = dev
+            if dev.max_output_channels > 2 and not dev.name.startswith('BlackHole'):
                 output_devices.append(dev)
+                if not self.output_device or dev.max_output_channels > self.output_device.max_output_channels:
+                    self.output_device = dev
                 
         return input_devices, output_devices
 
     def build_menu(self, input_devices, output_devices):
         """Builds menu structure from device lists"""
         self.menu.clear()  # Clear existing menu items first
-                    
+
         # Build menu items in order
         menu_items = []
+        
+        # Notice
+        menu_items.append(rumps.MenuItem("⚠️ Set System Output Device to BlackHole Xch", callback=None))
+        menu_items.append(rumps.separator)
         
         # Add Input Devices section
         menu_items.append("Input Devices")
@@ -85,12 +93,12 @@ class AudioSwitcherApp(rumps.App):
         input_devices, output_devices = self.enumerate_devices()
         self.build_menu(input_devices, output_devices)
 
-    def select_device(self, device_type, device_id):
+    def select_device(self, device_type, device):
         """Handles selection of either input or output device"""
         if device_type == 'input':
-            self.input_device = device_id
+            self.input_device = device
         else:
-            self.output_device = device_id
+            self.output_device = device
             
         if self.is_processing:
             self.start_processing()
