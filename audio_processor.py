@@ -8,9 +8,17 @@ class AudioProcessor:
         self.output_device = output_device
         self.stream = None
         
-    def start_stream(self, sample_rate=96000, channels=6, format=pyaudio.paFloat32):
+    def start_stream(self, format=pyaudio.paFloat32):
         """Initialize audio stream with callback"""
-        print(f"starting streaming Input{self.input_device}, Output{self.output_device}, Sample Rate{sample_rate}, Channel {channels}")
+        if not self.output_device:
+            raise ValueError("Output device must be set")
+            
+        sample_rate = int(self.output_device.default_sample_rate)
+        channels = self.output_device.max_output_channels
+        
+        print(f"Starting stream - Input: {self.input_device}, "
+              f"Output: {self.output_device}")
+              
         def callback(in_data, frame_count, time_info, status):
             # Process audio here
             processed_data = self.process_audio(in_data)
@@ -23,8 +31,8 @@ class AudioProcessor:
             input=True,
             output=True,
             stream_callback=callback,
-            input_device_index=self.input_device,
-            output_device_index=self.output_device
+            input_device_index=self.input_device.index if self.input_device else None,
+            output_device_index=self.output_device.index
         )
     
     def process_audio(self, data):

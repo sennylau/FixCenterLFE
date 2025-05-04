@@ -1,14 +1,15 @@
 import argparse
 import pyaudio
 from audio_processor import AudioProcessor
+from device import Device
 
 def list_devices():
     """List available audio devices"""
     p = pyaudio.PyAudio()
     print("\nAvailable audio devices:")
     for i in range(p.get_device_count()):
-        dev = p.get_device_info_by_index(i)
-        print(f"{i}: {dev['name']} (in: {dev['maxInputChannels']} ch, out: {dev['maxOutputChannels']} ch)")
+        dev = Device(i, p.get_device_info_by_index(i))
+        print(dev)
     p.terminate()
 
 def main():
@@ -21,14 +22,21 @@ def main():
     if args.list_devices:
         list_devices()
     else:
-        processor = AudioProcessor(args.input, args.output)
+        p = pyaudio.PyAudio()
         try:
-            processor.start_stream()
-            input("Press Enter to stop...")
-        except KeyboardInterrupt:
-            pass
+            input_device = Device(args.input, p.get_device_info_by_index(args.input))
+            output_device = Device(args.output, p.get_device_info_by_index(args.output))
+
+            processor = AudioProcessor(input_device, output_device)
+            try:
+                processor.start_stream()
+                input("Press Enter to stop...")
+            except KeyboardInterrupt:
+                pass
+            finally:
+                processor.stop_stream()
         finally:
-            processor.stop_stream()
+            p.terminate()
 
 if __name__ == "__main__":
     main()
