@@ -43,10 +43,6 @@ class AudioProcessor:
     def process_audio(self, data):
         """Swap channels 3 and 4 in audio data"""
         audio_array = np.frombuffer(data, dtype=self.format).copy()
-        # Create writable copy and reshape to (frames, channels)
-        # frames = len(audio_array) // 6  # Assuming 6 channels
-        # print(frames)
-        # audio_array = audio_array.copy().reshape(frames, 6)
         audio_array = audio_array.reshape(self.frames_per_buffer, self.channels)
         
         # Swap channels 3 and 4 (0-indexed 2 and 3)
