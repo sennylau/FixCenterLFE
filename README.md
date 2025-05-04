@@ -4,6 +4,10 @@
 
 > ✅ Fixes voice/dialog audio being incorrectly routed to the subwoofer  
 > ✅ Works in real-time with low latency using [BlackHole](https://github.com/ExistentialAudio/BlackHole)  
+> ✅ Simple UI to start channel fixing  
+---
+![BlackHole as Audio Output](Images/Menu.png)
+
 ---
 
 ## 🎮 Supported Games
