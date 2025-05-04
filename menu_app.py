@@ -5,7 +5,7 @@ from device import Device
 
 class AudioSwitcherApp(rumps.App):
     def __init__(self):
-        super(AudioSwitcherApp, self).__init__("🎛️", quit_button=None)
+        super(AudioSwitcherApp, self).__init__("LFE", quit_button=None)
         self.p = pyaudio.PyAudio()
         self.processor = None
         self.input_device = None

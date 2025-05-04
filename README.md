@@ -1,11 +1,16 @@
 # 🎧 FixCenterLFE
 
-**FixCenterLFE** is a lightweight macOS tool that intercepts multi-channel audio in real time and fixes incorrect channel mapping between the **Center** and **LFE (Subwoofer)** channels — a common issue when running Windows games via **Crossover** or **Wine**.
+**FixCenterLFE** is a lightweight macOS tool that intercepts multi-channel audio in real time and fixes incorrect channel mapping between the **Center** and **LFE (Subwoofer)** channels — a common issue (with your surround sourd system) when running Windows games via **Crossover** or **Wine**.
 
 > ✅ Fixes voice/dialog audio being incorrectly routed to the subwoofer  
 > ✅ Works in real-time with low latency using [BlackHole](https://github.com/ExistentialAudio/BlackHole)  
-> ✅ Open source, Apache-2.0 licensed
+---
 
+## 🎮 Supported Games
+
+- Black Myth: Wukong (黑神话悟空)
+- Split Fiction (双影奇境)
+- Other Wine/Crossover games with center/LFE channel issues under the surround sourd system
 ---
 
 ## 🔍 Problem
@@ -17,12 +22,6 @@ Many Wine-based Windows games assume Windows-style surround sound mapping. On ma
 - No easy way to remap audio channels globally
 
 ---
-
-## 🎮 Supported Games
-
-- Black Myth: Wukong (黑神话悟空)
-- Split Fiction (双影奇境)
-- Other Wine/Crossover games with center/LFE channel issues
 
 ## 🎯 Solution
 
@@ -48,16 +47,39 @@ Many Wine-based Windows games assume Windows-style surround sound mapping. On ma
       [Corrected Multichannel Audio]
              │
       ▼ Real Output Device (e.g. HDMI, Headphones)
+```
+## ⚙️ Installation
 
+### Prerequisites
+- Python 3.9.6+
+- [BlackHole](https://github.com/ExistentialAudio/BlackHole) virtual audio driver
+  - 16ch: `brew install blackhole-16ch`
+  - 64ch: `brew install blackhole-64ch`
+  - Try this to restart CoreAudio: `sudo killall -9 coreaudiod`
+  - ⚠️ In MacOS "Audio MIDI Setup", set the default audio output device to this device
+  - ![BlackHole as Audio Output](Images/BlackHole_as_Output.png)
+- [PortAudio](https://github.com/PortAudio/portaudio)
+  - Install it via Homebrew: `brew install portaudio`
+
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/FixCenterLFE.git
+   cd FixCenterLFE
+   ```
+
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run the application:
+   ```bash
+   python menu_app.py
+   ```
 ## 🤝 Contributing
 
-PRs are welcome! To contribute:
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
+PRs are welcome!
 Please include:
 - Description of changes
 - Testing details
