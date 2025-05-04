@@ -1,0 +1,4 @@
+rumps==0.4.0
+py2app==0.28.8
+pyaudio==0.2.13
+numpy==1.26.4
